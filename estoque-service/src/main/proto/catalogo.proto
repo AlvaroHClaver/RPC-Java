@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package estoque;
+
+option java_package = "com.example.estoque.proto";
+option java_multiple_files = true;
+
+// Request para separação de estoque baseado no ID do pedido
+message SeparacaoRequest {
+  int32 pedido_id = 1;   // ID do pedido
+}
+
+// Response indicando se a separação foi realizada
+message SeparacaoResponse {
+  int32 pedido_id = 1;            // ID do pedido
+  bool separacao_realizada = 2;    // True se a separação foi realizada com sucesso
+  string mensagem = 3;            // Mensagem opcional de status
+}
+
+// Serviço gRPC para sistema de estoque
+service EstoqueService {
+  // Executa a separação de itens para o pedido indicado
+  rpc RealizarSeparacao(SeparacaoRequest) returns (SeparacaoResponse);
+}

@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package logistica;
+
+// Serviço simples para trocar IDs de pedido e nota fiscal
+service LogisiticaService {
+  // Envia pedido + nota e recebe status de processamento
+  rpc SendPedidoNota (PedidoNota) returns (PedidoNotaResponse);
+}
+
+// Mensagem contendo os IDs do pedido e da nota fiscal
+message PedidoNota {
+  int64 pedido_id       = 1;
+  int64 nota_fiscal_id  = 2;
+}
+
+// Resposta com status OK ou ERROR e mensagem opcional
+message PedidoNotaResponse {
+  enum Status {
+    STATUS_OK    = 0;
+    STATUS_ERROR = 1;
+  }
+  Status status = 1;
+  string message = 2;
+}

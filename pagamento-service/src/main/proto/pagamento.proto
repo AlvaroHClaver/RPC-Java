@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package payment;
+
+
+
+// Mensagem de requisição de processamento de pagamento contendo apenas os campos essenciais
+message PagamentoRequest {
+  int32 pedido_id = 1;       // ID do pedido
+  string metodo = 2;          // Método de pagamento (ex: CARTAO, BOLETO)
+}
+
+// Mensagem de resposta ao processamento de pagamento
+message PagamentoResponse {
+  int32 pedido_id = 1;                     // ID do pedido referenciado
+  bool aprovado = 2;                       // True se pagamento aprovado
+  string status = 3;                       // Descrição do status (ex: "aprovado", "rejeitado")
+
+}
+
+// Serviço gRPC para pagamento
+service PagamentoService {
+  // Processa o pagamento de um pedido
+  rpc ProcessarPagamento(PagamentoRequest) returns (PagamentoResponse);
+}

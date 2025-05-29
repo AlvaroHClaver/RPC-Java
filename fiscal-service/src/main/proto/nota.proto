@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package nf;
+
+// Mensagem de requisição contendo apenas o ID do pedido
+message NotaFiscalRequest {
+  int32 pedido_id = 1;
+}
+
+// Mensagem de resposta com os dados da nota fiscal gerada
+message NotaFiscalResponse {
+  int32 id             = 1;  // ID interno da nota
+  int32 pedido_id      = 2;  // ID do pedido
+  string numero        = 3;  // Número da nota fiscal
+  string data_emissao  = 4;  // ISO-8601 timestamp de emissão
+  string chave_acesso  = 5;  // Chave de acesso eletrônica (opcional)
+}
+
+// Serviço gRPC para emissão de nota fiscal
+service NotaFiscalService {
+  // Emite (ou retorna) a nota fiscal para um pedido
+  rpc EmitirNota (NotaFiscalRequest) returns (NotaFiscalResponse);
+}
